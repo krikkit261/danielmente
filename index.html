@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="danielmente" />
+  <title>danielmente</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PERSONAL HEALTH DASHBOARD</p>
+      <h1>danielmente</h1>
+    </div>
+    <button id="installBtn" class="icon-button hidden" aria-label="Install app">＋</button>
+  </header>
+
+  <main>
+    <section class="hero-card">
+      <div>
+        <p id="todayLabel" class="muted"></p>
+        <h2>Your day at a glance</h2>
+        <p id="heroMessage" class="hero-message">Small actions count.</p>
+      </div>
+      <div class="score-ring" id="dailyRing" style="--score:0">
+        <span id="dailyScore">0</span><small>/100</small>
+      </div>
+    </section>
+
+    <section class="quick-grid" id="quickGrid"></section>
+
+    <section class="section-heading">
+      <div><p class="eyebrow">TODAY</p><h2>Log your habits</h2></div>
+      <input id="entryDate" type="date" />
+    </section>
+
+    <section class="panel accent-sleep">
+      <div class="panel-header">
+        <div><p class="eyebrow">SLEEP</p><h3>Goal: 8 hours</h3></div>
+        <div class="metric-badge" id="sleepToday">—</div>
+      </div>
+      <div class="two-col">
+        <label>Bedtime<input id="bedTime" type="time" /></label>
+        <label>Wake time<input id="wakeTime" type="time" /></label>
+      </div>
+      <button class="primary" data-save="sleep">Save sleep</button>
+      <canvas id="sleepChart" height="180"></canvas>
+    </section>
+
+    <section class="panel accent-weight">
+      <div class="panel-header">
+        <div><p class="eyebrow">WEIGHT</p><h3>Next goal: <span id="nextWeightGoal">260 lb</span></h3></div>
+        <div class="metric-badge" id="weightToday">—</div>
+      </div>
+      <div class="goal-track-wrap">
+        <div class="goal-track" id="weightGoalTrack"></div>
+        <div class="goal-labels"><span>260</span><span>Ultimate: 230 lb</span></div>
+      </div>
+      <label>Weight (lb)<input id="weightInput" type="number" step="0.1" min="100" max="600" inputmode="decimal" /></label>
+      <button class="primary" data-save="weight">Save weight</button>
+      <canvas id="weightChart" height="180"></canvas>
+    </section>
+
+    <section class="panel accent-movement">
+      <div class="panel-header">
+        <div><p class="eyebrow">MOVEMENT</p><h3>Goal: 30 minutes</h3></div>
+        <div class="metric-badge" id="movementToday">—</div>
+      </div>
+      <label>Minutes moving<input id="movementInput" type="number" min="0" max="600" inputmode="numeric" /></label>
+      <button class="primary" data-save="movement">Save movement</button>
+      <canvas id="movementChart" height="180"></canvas>
+    </section>
+
+    <section class="panel accent-screen">
+      <div class="panel-header">
+        <div><p class="eyebrow">SCREEN TIME</p><h3>Daily phone use</h3></div>
+        <div class="metric-badge" id="screenToday">—</div>
+      </div>
+      <p class="note">iPhone Screen Time cannot be read automatically by a web app. Enter the total from Settings → Screen Time, or import a CSV.</p>
+      <div class="two-col">
+        <label>Hours<input id="screenHours" type="number" min="0" max="24" /></label>
+        <label>Minutes<input id="screenMinutes" type="number" min="0" max="59" /></label>
+      </div>
+      <div class="button-row">
+        <button class="primary" data-save="screen">Save screen time</button>
+        <label class="secondary file-label">Import CSV<input id="screenCsv" type="file" accept=".csv,text/csv" hidden /></label>
+      </div>
+      <canvas id="screenChart" height="180"></canvas>
+    </section>
+
+    <section class="panel accent-eating">
+      <div class="panel-header">
+        <div><p class="eyebrow">EATING</p><h3>Ideal choices: 4 points</h3></div>
+        <div class="metric-badge" id="eatingToday">—</div>
+      </div>
+      <div class="question-list" id="eatingQuestions"></div>
+      <button class="primary" data-save="eating">Save eating check-in</button>
+      <canvas id="eatingChart" height="180"></canvas>
+    </section>
+
+    <section class="panel report-panel" id="weeklyReport">
+      <div class="panel-header">
+        <div><p class="eyebrow">WEEKLY REPORT</p><h3 id="reportTitle">This week</h3></div>
+        <div class="score-ring small" id="weeklyRing" style="--score:0"><span id="weeklyScore">0</span></div>
+      </div>
+      <div id="reportContent" class="report-content"></div>
+      <div class="button-row">
+        <button id="refreshReport" class="primary">Generate report</button>
+        <button id="notifyBtn" class="secondary">Enable Sunday notification</button>
+      </div>
+    </section>
+
+    <section class="panel settings-panel">
+      <div class="panel-header"><div><p class="eyebrow">DATA</p><h3>Backup and restore</h3></div></div>
+      <div class="button-row">
+        <button id="exportBtn" class="secondary">Export data</button>
+        <label class="secondary file-label">Restore data<input id="importData" type="file" accept="application/json" hidden /></label>
+      </div>
+      <button id="resetBtn" class="danger-link">Reset all data</button>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="#top" data-scroll="top">Today</a>
+    <a href="#weeklyReport">Report</a>
+    <a href="#" id="jumpLog">Log</a>
+  </nav>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
