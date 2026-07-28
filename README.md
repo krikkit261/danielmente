@@ -1,31 +1,21 @@
-# danielmente
+# danielmente v2.0.0
 
-An installable, local-first iPhone healthy-habit dashboard.
+A private, installable personal health dashboard designed for GitHub Pages and iPhone.
 
-## Features
-- Sleep entry with calculated hours and 14-day trend
-- Weight milestones from 260 to 230 lb and 7-day moving average
-- Movement minutes with daily goal and trend
-- Screen Time manual entry and CSV import
-- Four-question eating check-in scored out of 4
-- Weekly 0–100 report with tailored suggestions
-- JSON backup/restore
-- Offline use after first load
+## Version 2 changes
 
-## Install on iPhone
-A PWA must be served from an HTTPS website (or localhost during development). Upload this folder to any static host such as GitHub Pages, Netlify, Cloudflare Pages, or your own web server.
+- Sleep time fields fit neatly side by side on narrow iPhone screens.
+- Weight milestones begin at 360 lb and continue every 10 lb to 230 lb.
+- Screen Time goal is 2 hours.
+- Added systolic and diastolic blood-pressure logging, charting, and trend lines.
+- Blood pressure has a 120/80 reference goal and a once-per-week tracking target.
+- Blood pressure is excluded from daily scores. Tracking it at least once contributes 10 points to the weekly score; daily habits supply the remaining 90 points.
+- Movement charts are anchored at 0.
+- The app displays its version number.
+- Existing local data is automatically migrated from the earlier 4-hour Screen Time goal to the new 2-hour goal.
 
-Then on the iPhone:
-1. Open the HTTPS address in Safari.
-2. Tap Share.
-3. Tap **Add to Home Screen**.
-4. Open danielmente from its new icon.
-5. In the app, tap **Enable Sunday notification** and allow notifications.
+## Updating GitHub Pages
 
-## Important iPhone limitations
-- A web app cannot automatically read the Screen Time total shown in iOS Settings. Use the manual fields or import a CSV with columns: `date,hours,minutes`.
-- iPhone web notifications require the site to be installed on the Home Screen and permission to be granted.
-- This local-only version creates the Sunday report and notification when the app is opened on Sunday. Guaranteed background delivery at a precise time requires a small push-notification server or a native iOS app.
+Upload all files in this folder to the root of the GitHub repository, replacing the existing files. Do not upload the ZIP itself.
 
-## Data privacy
-All health data is stored in the browser's local storage on the device. Use **Export data** periodically to create backups.
+The app stores health records in the browser on the device. Replacing repository files does not normally erase that data. Clearing Safari website data will erase locally stored records unless they were exported first.
